@@ -1,5 +1,6 @@
 Dim_Date = 
 ADDCOLUMNS(
+   //remplacer soit par Calendar() et adapter cela à votre besion
     CALENDARAUTO(),
     "Year", YEAR([Date]),
     "Month Number", MONTH([Date]),
