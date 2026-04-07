@@ -1,0 +1,18 @@
+Dim_Date = 
+ADDCOLUMNS(
+    CALENDARAUTO(),
+    "Year", YEAR([Date]),
+    "Month Number", MONTH([Date]),
+    "Month Name", FORMAT([Date], "mmmm"),
+    "Short Month", FORMAT([Date], "mmm"),
+    "MonthID", FORMAT([Date], "yyyy-mm"),
+    "Month & Year", FORMAT([Date], "mmm yyyy"),
+    "YearMonthSort", YEAR([Date]) * 100 + MONTH([Date]),
+    "Quarter Number", QUARTER([Date]),
+    "Quarter", "Q" & QUARTER([Date]),
+    "Quarter & Year", "Q" & QUARTER([Date]) & " " & YEAR([Date]),
+    "Day Number", DAY([Date]),
+    "Day Name", FORMAT([Date], "dddd"),
+    "Weekday Number", WEEKDAY([Date], 2),
+    "Weekday Short", FORMAT([Date], "ddd")
+)

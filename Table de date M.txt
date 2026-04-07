@@ -1,0 +1,21 @@
+let
+    // set the date range
+    DateStart = List.Min(Revenu[Date]),
+    DateEnd   = List.Max(Revenu[Date]),
+    NombreJours = Duration.Days(DateEnd - DateStart) + 1,
+    ListeDates = List.Dates(DateStart, NombreJours, #duration(1, 0, 0, 0)),
+       
+    // Convert list to table
+    TableDate = Table.FromList(ListeDates, Splitter.SplitByNothing(), {"Date"}),
+    TypeDate = Table.TransformColumnTypes(TableDate, {{"Date", type date}}),
+
+    // Add date components
+    AddYear = Table.AddColumn(TypeDate, "Year", each Date.Year([Date]), Int64.Type),
+    AddQuarterNum = Table.AddColumn(AddYear, "Quarter No", each Date.QuarterOfYear([Date]), Int64.Type),
+    AddQuarterName = Table.AddColumn(AddQuarterNum, "Quarter", each "T" & Text.From([Quarter No]), type text),
+    AddMonthNum = Table.AddColumn(AddQuarterName, "Month No", each Date.Month([Date]), Int64.Type),
+    AddMonthName = Table.AddColumn(AddMonthNum, "Month Name", each Date.ToText([Date], "MMMM", "fr-FR"), type text),
+    AddDayNum = Table.AddColumn(AddMonthName, "Day No", each Date.DayOfWeek([Date], Day.Monday) + 1, Int64.Type),
+    AddDayName = Table.AddColumn(AddDayNum, "Day Name", each Date.ToText([Date], "dddd", "fr-FR"), type text)
+in
+    AddDayName
